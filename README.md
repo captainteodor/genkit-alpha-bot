@@ -66,67 +66,39 @@ FIREBASE_AUTH_DOMAIN=your-auth-domain
 ## Project Structure
 # Project Structure
 
-```markdown
-# src/
-
-## config/
-- `firebase.ts`
-  > Firebase initialization, setting up Firestore and Firebase Auth access.
-- `genkit.ts`
-  > Configures Genkit with plugins (Firebase, Vertex AI) and flow state logging.
-
-## constants/
-- `flowState.ts`
-  > Defines possible states in the bot's flow as constants for improved type safety.
-
-## cache/
-- `archetypeCache.ts`
-  > Caches archetype data temporarily to reduce redundant Firestore reads and improve response speed.
-
-## prompts/
-- `welcomePrompt.ts`
-  > Defines the initial welcome prompt structure for new users starting the profile setup flow.
-- `archetypePrompt.ts`
-  > Template for archetype suggestions, guiding users in selecting archetypes for their profile.
-
-### prompts/partials/
-- `defaultStyle.ts`
-  > Defines default style formatting for responses, e.g., setting tone (friendly, humorous, etc.).
-
-## data/
-
-### data/models/
-- `Archetype.ts`
-  > Type definitions for archetypes, including attributes like name, description, and relationship goals.
-- `UserDetails.ts`
-  > Type definitions for user details, such as name, age, sex, and relationship goal.
-
-### data/repositories/
-- `archetypeRepository.ts`
-  > Handles data access for archetypes, including fetching and managing archetype records in Firestore.
-- `userRepository.ts`
-  > Manages data access for user profiles, allowing retrieval and updating of user-specific data.
-
-## services/
-- `archetypeService.ts`
-  > Core logic for handling archetype-related operations, such as filtering by user goal.
-- `userService.ts`
-  > Provides user-related services, including fetching and updating user data.
-
-## flows/
-- `profileSetupFlow.ts`
-  > Manages the main profile setup flow, transitioning through states (welcome, archetype selection, etc.).
-- `resetFlowStateFlow.ts`
-  > Handles flow state resets, allowing users to restart the profile setup if needed.
-
-## utils/
-- `index.ts`
-  > Contains utility functions, such as JSON parsing and response formatting for Vertex AI outputs.
-
-# Root
-- `index.ts`
-  > Main entry point; initializes and starts the server, loading configurations and defining flow states.
+```plaintext
+genkit-alpha-bot/
+├── src/
+│   ├── config/
+│   │   ├── firebase.ts                # Firebase initialization, setting up Firestore and Firebase Auth access
+│   │   └── genkit.ts                  # Configures Genkit with plugins (Firebase, Vertex AI) and flow state logging
+│   ├── constants/
+│   │   └── flowState.ts               # Defines possible states in the bot's flow as constants for improved type safety
+│   ├── cache/
+│   │   └── archetypeCache.ts          # Caches archetype data temporarily to reduce redundant Firestore reads
+│   ├── prompts/
+│   │   ├── welcomePrompt.ts           # Defines the initial welcome prompt structure for new users
+│   │   ├── archetypePrompt.ts         # Template for archetype suggestions
+│   │   └── partials/
+│   │       └── defaultStyle.ts        # Defines default style formatting for responses
+│   ├── data/
+│   │   ├── models/
+│   │   │   ├── Archetype.ts           # Type definitions for archetypes
+│   │   │   └── UserDetails.ts         # Type definitions for user details
+│   │   └── repositories/
+│   │       ├── archetypeRepository.ts # Handles data access for archetypes
+│   │       └── userRepository.ts      # Manages data access for user profiles
+│   ├── services/
+│   │   ├── archetypeService.ts        # Core logic for handling archetype-related operations
+│   │   └── userService.ts             # Provides user-related services
+│   ├── flows/
+│   │   ├── profileSetupFlow.ts        # Manages the main profile setup flow
+│   │   └── resetFlowStateFlow.ts      # Handles flow state resets
+│   ├── utils/
+│   │   └── index.ts                   # Contains utility functions for JSON parsing and response formatting
+│   └── index.ts                       # Main entry point; initializes and starts the server
 ```
+
 
 
 ## Main Components

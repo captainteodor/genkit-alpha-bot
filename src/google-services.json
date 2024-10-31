@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1029812079354",
+    "firebase_url": "https://photofeeler-b47c8-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "photofeeler-b47c8",
+    "storage_bucket": "photofeeler-b47c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029812079354:android:732d09c6f7dcdf8ca35743",
+        "android_client_info": {
+          "package_name": "com.teodor.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1029812079354-4kb9qp6rldgepglpijl5jkfd2t6srs58.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teodor.android",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1029812079354-qqjv93l06ueknmj0spbf49db0he0er08.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teodor.android",
+            "certificate_hash": "1eae88dc15b822eb29402813f2da4a9dc5b14f1d"
+          }
+        },
+        {
+          "client_id": "1029812079354-63ogqp11r7u7vulapoq6bg4uvjqv2kkv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAuRfATK7ZDkc4r7IKZbGH66ONKqGBHVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1029812079354-63ogqp11r7u7vulapoq6bg4uvjqv2kkv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1029812079354-nfm7gjbcf3u1fcl6sdttv6gb9gim0qv3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.teodor.swifties"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

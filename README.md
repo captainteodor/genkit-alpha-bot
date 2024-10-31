@@ -1,34 +1,32 @@
 # Genkit Alpha Bot
 
-The Genkit Alpha Bot is an advanced chatbot application developed with the Genkit framework, Firebase Firestore, and Google's Vertex AI for NLP processing. This bot is designed to guide users through setting up their dating profiles with personalized responses based on user details, preferences, and goals. With a focus on user experience, the bot uses a series of flows for generating responses and suggestions that align with the user's objectives.
+The Genkit Alpha Bot is a conversational application built using Genkit, Firebase Firestore, and Google Vertex AI. This bot assists users in setting up dating profiles with customized responses based on user preferences and goals. With a step-by-step approach, users receive tailored archetype suggestions and guidance that fit their objectives, providing a seamless and engaging profile setup experience.
 
 ## Features
-
-- **Profile Setup Flow**: Users receive a step-by-step guided setup for creating a dating profile.
-- **Archetype Suggestions**: Custom suggestions for archetypes based on users' relationship goals and personal attributes.
-- **In-Memory Caching**: Efficient data retrieval through Firestore with a caching mechanism.
-- **Stateful Conversations**: Each conversation retains context through flow states, allowing for smooth transitions.
-- **Vertex AI Integration**: Leverages Google's Vertex AI for natural language processing.
-- **Customizable Prompt Tones**: Response tones are dynamically adjusted based on user input, such as "friendly" or "sarcastic".
+* **Guided Profile Setup**: Interactive profile creation tailored to user preferences.
+* **Archetype Suggestions**: Intelligent archetype recommendations based on relationship goals.
+* **In-Memory Caching**: Efficiently caches data from Firestore, reducing database load and improving response times.
+* **Contextual Conversations**: Stateful conversations that maintain user context and smooth transitions between states.
+* **Vertex AI Integration**: Utilizes Vertex AI to generate personalized, natural language responses.
+* **Customizable Tones**: Configurable response tones, including "friendly," "sarcastic," and more, based on user input and archetypes.
 
 ## Table of Contents
-- [Setup](#setup)
-- [Environment Variables](#environment-variables)
-- [Project Structure](#project-structure)
-- [Main Components](#main-components)
-- [Usage](#usage)
-- [Development Workflow](#development-workflow)
-- [License](#license)
+1. [Setup](#setup)
+2. [Environment Variables](#environment-variables)
+3. [Project Structure](#project-structure)
+4. [Main Components](#main-components)
+5. [API Usage](#api-usage)
+6. [Development Workflow](#development-workflow)
+7. [License](#license)
 
 ## Setup
 
 ### Requirements
-- Node.js (version 14 or higher)
-- Firebase: Ensure Firebase is configured with Firestore access for user data storage.
-- Genkit CLI: The Genkit CLI can simplify plugin installations.
+* Node.js: Version 14 or higher
+* Firebase: Ensure Firestore is enabled in Firebase for data storage.
+* Genkit CLI: Install Genkit CLI to assist with plugin setups.
 
 ### Installation
-
 1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/genkit-alpha-bot.git
@@ -40,96 +38,154 @@ cd genkit-alpha-bot
 npm install
 ```
 
-3. Set up environment variables as described below.
+3. Environment Configuration:
+   * Set up environment variables as detailed below.
 
-4. Run the development server:
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
-## Environment Variables
+### Google Cloud Setup
+* Enable Vertex AI in your Google Cloud project and create your language models as needed.
+* Set up Firebase with Firestore and obtain your API credentials.
 
-Create a `.env` file in the project root and add the following configurations:
+## Environment Variables
+Create a `.env` file in the project root with the following variables:
 
 ```plaintext
-MODEL_TEMPERATURE=0.7                  # Controls response creativity
+MODEL_TEMPERATURE=0.7                  # Controls model response creativity
 CACHE_DURATION=60000                   # Cache duration in milliseconds
-FIREBASE_API_KEY=your-firebase-api-key # Firebase configuration
-FIREBASE_PROJECT_ID=your-project-id
-FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+FIREBASE_API_KEY=your-firebase-api-key # Firebase API Key
+FIREBASE_PROJECT_ID=your-project-id    # Firebase Project ID
 FIREBASE_APP_ID=your-app-id
 FIREBASE_STORAGE_BUCKET=your-storage-bucket
 FIREBASE_AUTH_DOMAIN=your-auth-domain
 ```
 
 ## Project Structure
+# Project Structure
 
-```plaintext
-genkit-alpha-bot/
-├── src/
-│   ├── config/
-│   │   └── firebase.ts                # Firebase initialization
-│   ├── constants/
-│   │   └── flowState.ts               # Defines flow states
-│   ├── data/
-│   │   ├── repositories/              # Data repositories for user and archetype handling
-│   │   └── models/                    # Type definitions for user details and archetypes
-│   ├── flows/
-│   │   ├── profileSetupFlow.ts        # Profile setup flow logic
-│   │   └── resetFlowStateFlow.ts      # Flow reset logic
-│   ├── memory/                        # In-memory cache setup
-│   ├── services/
-│   │   ├── promptService.ts           # Generates prompts for Vertex AI
-│   │   └── stateService.ts            # Manages flow state persistence
-│   ├── utils/
-│   │   └── utils.ts                   # Utility functions
-│   └── index.ts                       # Entry point to start the server
-├── .env                               # Environment variable configurations
-├── package.json                       # Project dependencies and scripts
-└── README.md                          # Project documentation
+```markdown
+# src/
+
+## config/
+- `firebase.ts`
+  > Firebase initialization, setting up Firestore and Firebase Auth access.
+- `genkit.ts`
+  > Configures Genkit with plugins (Firebase, Vertex AI) and flow state logging.
+
+## constants/
+- `flowState.ts`
+  > Defines possible states in the bot's flow as constants for improved type safety.
+
+## cache/
+- `archetypeCache.ts`
+  > Caches archetype data temporarily to reduce redundant Firestore reads and improve response speed.
+
+## prompts/
+- `welcomePrompt.ts`
+  > Defines the initial welcome prompt structure for new users starting the profile setup flow.
+- `archetypePrompt.ts`
+  > Template for archetype suggestions, guiding users in selecting archetypes for their profile.
+
+### prompts/partials/
+- `defaultStyle.ts`
+  > Defines default style formatting for responses, e.g., setting tone (friendly, humorous, etc.).
+
+## data/
+
+### data/models/
+- `Archetype.ts`
+  > Type definitions for archetypes, including attributes like name, description, and relationship goals.
+- `UserDetails.ts`
+  > Type definitions for user details, such as name, age, sex, and relationship goal.
+
+### data/repositories/
+- `archetypeRepository.ts`
+  > Handles data access for archetypes, including fetching and managing archetype records in Firestore.
+- `userRepository.ts`
+  > Manages data access for user profiles, allowing retrieval and updating of user-specific data.
+
+## services/
+- `archetypeService.ts`
+  > Core logic for handling archetype-related operations, such as filtering by user goal.
+- `userService.ts`
+  > Provides user-related services, including fetching and updating user data.
+
+## flows/
+- `profileSetupFlow.ts`
+  > Manages the main profile setup flow, transitioning through states (welcome, archetype selection, etc.).
+- `resetFlowStateFlow.ts`
+  > Handles flow state resets, allowing users to restart the profile setup if needed.
+
+## utils/
+- `index.ts`
+  > Contains utility functions, such as JSON parsing and response formatting for Vertex AI outputs.
+
+# Root
+- `index.ts`
+  > Main entry point; initializes and starts the server, loading configurations and defining flow states.
 ```
+
 
 ## Main Components
 
 ### Flows
 
 #### Profile Setup Flow: `profileSetupFlow.ts`
-- Guides the user through setting up their profile with a welcome prompt and archetype suggestions.
-- Flow state management transitions from `awaiting_welcome` to `awaiting_archetype` and beyond.
+Guides users through profile creation using a series of states, transitioning as follows:
+* `awaiting_welcome`: Welcomes users and prompts them to choose their relationship goal.
+* `awaiting_archetype`: Suggests archetypes based on the user's selected goal.
+* `awaiting_photos`: Asks users to select photos matching their chosen archetypes.
+* `completed`: Final state after completing profile setup.
+* `error`: Handles any errors that occur during the flow.
 
 #### Reset Flow State: `resetFlowStateFlow.ts`
-- Resets the flow state for a given conversation, allowing users to start afresh if necessary.
+* Resets the flow state for a given conversation, allowing users to restart their profile setup if needed.
 
 ### Services
 
 #### Prompt Service: `promptService.ts`
-- Uses Google's Vertex AI to generate customized responses based on user details and archetypes.
-- Contains `generateWelcomeMessage` and `generateArchetypeSuggestion` functions to drive response generation.
+Generates prompts using Vertex AI's language models, configured with customizable parameters such as temperature for controlling response creativity.
+
+Primary functions include:
+* `generateWelcomeMessage`: Welcomes users and introduces the setup flow.
+* `generateArchetypeSuggestion`: Suggests archetypes based on user details.
 
 #### State Service: `stateService.ts`
-- Stores and retrieves conversation flow states for each user session.
-- Works with Firebase or a mock in-memory store, making it versatile across environments.
+* Manages the flow state for each user session, ensuring continuity.
+* Works with Firestore or in-memory storage for flexibility across environments.
 
 ### Utilities
-- **Response Parsing**: `parseResponse` and `parseWelcomeResponse`
-  - Ensures JSON structure integrity for responses from Vertex AI.
-  - Filters out non-essential data like safety ratings, focusing only on user-facing content.
+* **Response Parsing**: `parseResponse` and `parseWelcomeResponse`
+  * Parses JSON responses from Vertex AI, filtering out irrelevant data (e.g., safety-related metadata) to ensure responses are user-friendly.
 
-## Usage
+## API Usage
 
-### Starting the Bot Server
-
-Run the bot server locally with:
+### Starting the Server
+To run the server locally:
 ```bash
 npm start
 ```
 
-### Sample API Requests
+### Flow State Transitions
+The bot maintains state across user interactions. Below is a guide to the states in profileSetupFlow:
 
-#### Profile Setup Initialization
+| Flow State | Description |
+|------------|-------------|
+| awaiting_welcome | Prompts user to choose a relationship goal. |
+| awaiting_archetype | Recommends archetypes based on user's relationship goal. |
+| awaiting_photos | Requests photos that represent chosen archetypes. |
+| completed | Final state after profile setup is complete. |
+| error | Handles errors and prompts the user to restart the flow. |
 
+### API Endpoints
+
+#### 1. Profile Setup Flow
 Endpoint: `POST /profileSetupFlow`
 
+Sample Request:
 ```json
 {
   "data": {
@@ -148,15 +204,15 @@ Expected Response:
 ```json
 {
   "flowState": "awaiting_welcome",
-  "response": "Hey Teodor, welcome! 22 years old, huh? Still figuring out the whole 'adulting' thing, I see. What's your relationship goal, long-term or short-term?",
+  "response": "Hey Teodor, welcome! What's your relationship goal, long-term or short-term?",
   "suggestions": ["Long-term relationship", "Short-term relationship"]
 }
 ```
 
-#### Transition to Archetype Suggestions
-
+#### 2. Archetype Suggestions
 Endpoint: `POST /profileSetupFlow`
 
+Sample Request:
 ```json
 {
   "data": {
@@ -173,10 +229,19 @@ Endpoint: `POST /profileSetupFlow`
 }
 ```
 
-#### Reset Flow State
+Expected Response:
+```json
+{
+  "flowState": "awaiting_archetype",
+  "response": "Based on your long-term goal, here are some archetypes that may fit you:",
+  "suggestions": ["The Visionary", "The Adventurer", "The Protector"]
+}
+```
 
+#### 3. Reset Flow State
 Endpoint: `POST /resetFlowStateFlow`
 
+Sample Request:
 ```json
 {
   "data": {
@@ -185,19 +250,29 @@ Endpoint: `POST /resetFlowStateFlow`
 }
 ```
 
+Expected Response:
+```json
+{
+  "message": "Flow state reset successfully for conversation ID: 1234-5678-91011"
+}
+```
+
 ## Development Workflow
 
-1. **Testing**: Run unit tests for flows and services with:
+### Testing
+Run unit tests for flows and services to ensure functionality:
 ```bash
 npm test
 ```
 
-2. **Flow Inspection**: Use the Genkit CLI to inspect flow state transitions and ensure expected states are met.
+### Flow Debugging
+* Use the Genkit CLI for flow state inspection to confirm expected states.
 
-3. **Environment Configurations**: Adjust environment variables in `.env` to control model behavior and Firestore access.
+### Environment Adjustments
+* Adjust `.env` file variables to control model settings and Firestore configurations.
+
+### Error Logging
+* Track error logs to diagnose issues with prompts, state transitions, and Firestore interactions.
 
 ## License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
-
-*Note: This README provides the setup and usage instructions based on our development work on genkit-alpha-bot. For further customization, refer to the respective flow and service configurations in the code.*
+This project is licensed under the MIT License. See the LICENSE file for more information.

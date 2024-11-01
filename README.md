@@ -247,4 +247,4 @@ npm test
 * Track error logs to diagnose issues with prompts, state transitions, and Firestore interactions.
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for more information.
+This project is licensed under the License. See the LICENSE file for more information.
